@@ -1,9 +1,19 @@
 /* Help popup */
 
+function isSafeRedirectUrl( url ) {
+	if ( ! url ) { return false; }
+	try {
+		var parsed = new URL( String( url ).replace( /[\t\n\r]/g, '' ), window.location.origin );
+		return parsed.origin === window.location.origin && ( parsed.protocol === 'http:' || parsed.protocol === 'https:' );
+	} catch ( e ) { return false; }
+}
+
 function popUp(URL) {
 	day = new Date();
 	id = day.getTime();
-	window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=800,height=300,left=540,top=250');
+	if ( isSafeRedirectUrl( URL ) ) {
+		window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=800,height=300,left=540,top=250');
+	}
 	//eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=800,height=300,left=540,top=250');");
 }
 
